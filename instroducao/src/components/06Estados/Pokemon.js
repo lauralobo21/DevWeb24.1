@@ -3,6 +3,9 @@ import { useState } from "react"
 const Pokemon = () => {
     let url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
     const [contador, setContador] = useState(1)
+    const incrementarContador = () => {
+        setContador(valor => valor + 1)
+    }
     function decrementarContador() {
         setContador(contador - 1)
     }
