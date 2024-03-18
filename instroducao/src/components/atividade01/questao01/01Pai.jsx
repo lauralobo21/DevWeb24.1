@@ -1,3 +1,4 @@
+import React from 'react';
 import Filho from "./01Filho";
 
 const Pai = () => {
