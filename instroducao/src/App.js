@@ -6,14 +6,20 @@
 //import Pokemon from "./components/06Estados/Pokemon";
 //import { CompA } from "./components/07PropDrilling/PropDrilling";
 //import PokemonPrincipal from "./components/09PokemonContexto/PokemonPrincipal";
-import Pai from "./components/atividade01/questao01/01Pai";
-import Filho from "./components/atividade01/questao01/01Filho";
+//import Pai from "./components/atividade01/questao01/01Pai";
+//import Filho from "./components/atividade01/questao01/01Filho";
+//import MeuPC from "./components/atividade01/questao01/02MeuPC";
+import * as Arena from "./components/atividade01/questao01/03Batalha"
 
 function App() {
     return (
         <div>
             <h1>Desenvolvimento de Software para Web!</h1>
-            <Filho />
+            <Arena.World>
+                <Arena.Arena arena = "Arena 1" />
+                <Arena.Arena arena = "Arena 2" />
+                <Arena.Arena arena = "Arena 3" />
+            </Arena.World>
         </div>
     );
 }
