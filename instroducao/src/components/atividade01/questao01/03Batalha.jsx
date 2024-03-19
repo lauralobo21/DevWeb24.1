@@ -7,6 +7,7 @@ const Hero = (props) => {
     )
 }
 
+
 const Enemy = (props) => {
     return(
         <div>
