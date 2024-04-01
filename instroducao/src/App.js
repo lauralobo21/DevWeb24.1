@@ -9,17 +9,15 @@
 //import Pai from "./components/atividade01/questao01/01Pai";
 //import Filho from "./components/atividade01/questao01/01Filho";
 //import MeuPC from "./components/atividade01/questao01/02MeuPC";
-import * as Arena from "./components/atividade01/questao01/03Batalha"
+//import * as Arena from "./components/atividade01/questao01/03Batalha"
+//import Efeito from "./components/10Efeito/Efeito";
+import MinhaPromessa from "./components/11Promessas/MinhaPromessa";
 
 function App() {
     return (
         <div>
             <h1>Desenvolvimento de Software para Web!</h1>
-            <Arena.World>
-                <Arena.Arena arena = "Arena 1" />
-                <Arena.Arena arena = "Arena 2" />
-                <Arena.Arena arena = "Arena 3" />
-            </Arena.World>
+            <MinhaPromessa/>
         </div>
     );
 }
