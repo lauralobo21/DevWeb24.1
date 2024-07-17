@@ -11,13 +11,14 @@
 //import MeuPC from "./components/atividade01/questao01/02MeuPC";
 //import * as Arena from "./components/atividade01/questao01/03Batalha"
 //import Efeito from "./components/10Efeito/Efeito";
-import MinhaPromessa from "./components/11Promessas/MinhaPromessa";
+//import MinhaPromessa from "./components/11Promessas/MinhaPromessa";
+//import CovidAxios from "./components/12Axios/CovidAxios";
+import SaveLoadData from "./components/14LocalSessionsStorage/SaveLoadData";
 
 function App() {
     return (
-        <div>
-            <h1>Desenvolvimento de Software para Web!</h1>
-            <MinhaPromessa/>
+        <div className="App">
+            <SaveLoadData/>
         </div>
     );
 }
