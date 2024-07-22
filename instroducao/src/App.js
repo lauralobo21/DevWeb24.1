@@ -13,13 +13,13 @@
 //import Efeito from "./components/10Efeito/Efeito";
 //import MinhaPromessa from "./components/11Promessas/MinhaPromessa";
 //import CovidAxios from "./components/12Axios/CovidAxios";
-import SaveLoadData from "./components/14LocalSessionsStorage/SaveLoadData";
+// import SaveLoadData from "./components/14LocalSessionsStorage/SaveLoadData";
+import MyNavbar from "./components/16Boostrap/MyNavbar";
+
 
 function App() {
     return (
-        <div className="App">
-            <SaveLoadData/>
-        </div>
+        <MyNavbar />
     );
 }
 
