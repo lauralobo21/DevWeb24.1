@@ -14,12 +14,16 @@
 //import MinhaPromessa from "./components/11Promessas/MinhaPromessa";
 //import CovidAxios from "./components/12Axios/CovidAxios";
 // import SaveLoadData from "./components/14LocalSessionsStorage/SaveLoadData";
-import MyNavbar from "./components/16Boostrap/MyNavbar";
+// import MyNavbar from "./components/16Boostrap/MyNavbar";
+//import MainAluno from "./components/17CRUD/MainAluno";
+import Main from "./components/Atividades/atividade03/main";
 
 
 function App() {
     return (
-        <MyNavbar />
+        <div>
+            <Main />
+        </div>
     );
 }
 
