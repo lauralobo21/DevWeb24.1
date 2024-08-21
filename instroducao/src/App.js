@@ -16,13 +16,17 @@
 // import SaveLoadData from "./components/14LocalSessionsStorage/SaveLoadData";
 // import MyNavbar from "./components/16Boostrap/MyNavbar";
 //import MainAluno from "./components/17CRUD/MainAluno";
-import Main from "./components/Atividades/atividade03/main";
+//import Main from "./components/Atividades/atividade03/main";
+//import Questao01A from "./components/Prova/Questao01";
+//import Questao02 from "./components/Prova/Questao02";
+//import Questao03 from "./components/Prova/Questao03";
+//import Questao04 from "./components/Prova/Questao04";
 
 
 function App() {
     return (
         <div>
-            <Main />
+            <
         </div>
     );
 }
