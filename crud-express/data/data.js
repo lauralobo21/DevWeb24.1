@@ -1,11 +1,9 @@
 const professores = [
-    { id: 0, nome: "Wladimir Tavares", curso: "CC", titulacao: "Doutorado" },
-    { id: 1, nome: "Fábio Campos", curso: "SI", titulacao: "Doutorado" },
-    { id: 2, nome: "João Marcel", curso: "CC", titulacao: "Doutorado" },
-    { id: 3, nome: "Arthur Araruna", curso: "DD", titulacao: "Mestrado" },
-    { id: 4, nome: "Davi Romero", curso: "EC", titulacao: "Doutorado" }
+    { id: 0, nome: "Wladimir Tavares", curso: "CC", titulacao: "DOUTORADO", universidade: {ufc:true, ifce:false}, ai: {es:false,lc:false,mc:false} },
+    { id: 1, nome: "Fábio Campos", curso: "SI", titulacao: "DOUTORADO", universidade: {ufc:true, ifce:false}, ai: {es:false,lc:false,mc:true} },
+    { id: 2, nome: "João Marcel", curso: "CC", titulacao: "DOUTORADO", universidade: {ufc:true, ifce:false}, ai: {es:false,lc:false,mc:false}},
+    { id: 3, nome: "Arthur Araruna", curso: "DD", titulacao: "MESTRADO", universidade: {ufc:true, ifce:false}, ai: {es:false,lc:false,mc:false}},
+    { id: 4, nome: "Davi Romero", curso: "EC", titulacao: "DOUTORADO", universidade: {ufc:true, ifce:false}, ai: {es:false,lc:false,mc:false} }
 ]
 
-
-//sintaxe do commom js
 module.exports = professores
