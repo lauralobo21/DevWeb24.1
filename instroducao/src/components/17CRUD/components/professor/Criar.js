@@ -1,7 +1,10 @@
+import ProfessorService from "../../services/ProfessorService"
 import "../../css/crud.css"
+import ProfessorFirebaseService from "../../services/ProfessorFirebaseService";
+import FirebaseContext from "../../utils/FirebaseContext";
 
-import { useState } from "react"
-import axios from "axios"
+
+import { useState, useContext } from "react"
 
 const Criar = () => {
     
@@ -11,15 +14,7 @@ const Criar = () => {
     const [ai, setAi] = useState({es:false, lc:false, mc:false}) //ai = área de interesse
     const [universidade, setUniversidade] = useState({ufc:false,ifce:false})
 
-    const postProfessorAxiosThenCatch = (professor) => {
-        axios.post("http://localhost:3001/professores", professor)
-        .then(
-            (response) => {
-                console.log(response)
-            }
-        )
-        .catch(error=>console.log(error))
-    }
+    const firebase = useContext(FirebaseContext)
 
     const handleRadio = (event) => {
         const reset = {ufc:false,ifce:false}
@@ -55,14 +50,25 @@ const Criar = () => {
         event.preventDefault()
         //alert("Nome: " + nome + "\nCurso: " + curso + " \nTitulacao: " + titulacao)
         const novoProfessor = {nome,curso,titulacao,ai,universidade}
-        postProfessorAxiosThenCatch(novoProfessor)
+        //postProfessorAxiosThenCatch(novoProfessor)
+        //postProfessorFetchThenCatch(novoProfessor)
+        /*ProfessorService.postProfessorAxiosThenCatch(
+            novoProfessor,
+            (data) => {
+                console.log(data)
+            }
+        )*/
+       ProfessorFirebaseService.criar(
+        firebase.getFirestoreDb(),
+        (professorSimples) => console.log(professorSimples),
+         novoProfessor
+       )
 
     }
     
     return (
         <div className="page-content">
             <h1>Criar Professor</h1>
-            <h4>{JSON.stringify(universidade )}</h4>
             <form className="form-content" onSubmit={handleSubmit}>
 
                 <div className="mb-3">

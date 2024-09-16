@@ -1,8 +1,10 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+/src/components/17CRUD/keys
 /crud-generator/node_modules
 /crud-express/node_modules
+/instroducao/node_modules
 /.pnp
 .pnp.js
 
@@ -22,3 +24,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+
