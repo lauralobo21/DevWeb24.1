@@ -1,7 +1,7 @@
 button {
     margin-left: 10px;
 }
-
+/* cores */
 fieldset.scheduler-border {
     border: 1px groove #ddd !important;
     padding: 1.4em 1.4em 1.4em 1.4em !important;
@@ -15,6 +15,8 @@ fieldset.scheduler-border {
     margin-left: 25px;
     width: 95%;
 }
+
+
 
 .table-content {
     margin-top: 15px;

@@ -1,80 +1,80 @@
-import { collection, query, getDocs, addDoc, doc, getDoc, setDoc, deleteDoc } from "firebase/firestore"
+import {
+    collection,
+    query,
+    getDocs,
+    addDoc,
+    doc,
+    getDoc,
+    setDoc,
+    deleteDoc,
+} from "firebase/firestore";
 
 class AlunoFirebaseService {
-
     static listar(db, callback) {
-        const c = collection(db,"alunos")
-        //const q = query(c)
-        getDocs(c)
-        .then(
-            (querySnapshot) => {
+        // Cria uma referência para a coleção "alunos"
+        const c = collection(db, "alunos");
 
-                const alunos = []
-                //laço
-                querySnapshot.forEach(
-                    ( aluno ) => {
-                        //console.log(aluno.id)
-                        //console.log(aluno.data())
-                        alunos.push(
-                            {
-                                id:aluno.id,
-                                ...aluno.data()
-                            }
-                        ) //alunos
-                    }
-                ) // fim do laço
-                callback(alunos)
-            }
-        )
-        .catch(error => console.log(error))
+        // Cria uma query para buscar todos os documentos da coleção "alunos"
+        const q = query(c);
+
+        // Busca todos os documentos da coleção "alunos"
+        getDocs(q)
+            .then((querySnapshot) => {
+                const alunos = [];
+                querySnapshot.forEach((aluno) => {
+                    alunos.push({
+                        id: aluno.id,
+                        ...aluno.data(),
+                    });
+                });
+                callback(alunos);
+            })
+            .catch((error) => {
+                console.error("Erro ao buscar os alunos: ", error);
+            });
     }
 
-    static criar(db, callback, aluno) {
-        const c = collection(db,"alunos")
-        addDoc(c,aluno)
-        .then(
-            (aluno) => {
-                callback({id:aluno.id})
-            }
-        )
-        .catch(error => console.log(error))
+    static criar(db, aluno, callback) {
+        const c = collection(db, "alunos");
+        addDoc(c, aluno)
+            .then((docRef) => {
+                callback({ id: docRef.id });
+            })
+            .catch((error) => {
+                console.error("Erro ao criar o aluno: ", error);
+            });
     }
 
     static getById(db, callback, id) {
-        
-        const docRef = doc(db, "alunos", id)
+        const docRef = doc(db, "alunos", id);
         getDoc(docRef)
-        .then(
-            (docSnap) => {
-                //console.log(docSnap.data())
-                //const aluno = docSnap.data()
-                callback(docSnap.data())
-            }
-        )
-        .catch(error => console.log(error))
+            .then((docSnap) => {
+                callback(docSnap.data());
+            })
+            .catch((error) => console.log(error));
     }
 
-    static atualizar(db, callback, id, alunoAtualizado) {
-        const docRef = doc(db,"alunos",id)
-        setDoc(docRef,alunoAtualizado)
-        .then(
-            () => {
-                callback({id})
-            }
-        )
-        .catch(error => console.log(error))
+    static atualizar(db, id, alunoAtualizado, callback) {
+        const MyDoc = doc(db, "alunos", id);
+        setDoc(MyDoc, alunoAtualizado)
+            .then(() => {
+                callback({ id: MyDoc.id });
+            })
+            .catch((error) => {
+                console.error("Erro ao atualizar o aluno: ", error);
+            });
     }
 
-    static apagar(db, callback, id) {
-        const docRef = doc(db, "alunos", id)
+    static deletar(db, callback, id) {
+        const docRef = doc(db, "alunos", id);
         deleteDoc(docRef)
-        .then(
-            () => {
-                callback({id})
-            }
-        )
-        .catch(error => console.log(error))
+            .then(() => {
+                callback({ id });
+            })
+            .catch((error) => {
+                console.error("Erro ao deletar o aluno: ", error);
+            });
     }
 }
 
-export default AlunoFirebaseService
+export default AlunoFirebaseService;
