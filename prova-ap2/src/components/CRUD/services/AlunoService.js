@@ -1,12 +1,10 @@
 import axios from "axios";
 
-//const url = "http://localhost:3001/professores";
-const url = "http://localhost:3003/professores/"
-//const url = "http://10.0.116.0:3003/professores/"
+const url = "http://localhost:3003/aluno/"
 
-class ProfessorService {
+class AlunoService {
   //GET SERVICES
-  static getProfessoresAxiosThenCatch = (callback) => {
+  static getAlunosAxiosThenCatch = (callback) => {
     axios
       .get(url+"listar")
       .then((response) => {
@@ -16,7 +14,7 @@ class ProfessorService {
       .catch((error) => console.log(error));
   };
 
-  static getProfessoresAxiosAsyncAwait = async (callback) => {
+  static getAlunosAxiosAsyncAwait = async (callback) => {
     try {
       const response = await axios.get(url+"listar");
       callback(response.data);
@@ -25,14 +23,14 @@ class ProfessorService {
     }
   };
 
-  static getProfessoresFetchThenCatch = (callback) => {
+  static getAlunosFetchThenCatch = (callback) => {
     fetch(url+"listar")
       .then((response) => response.json())
       .then((json) => callback(json))
       .catch((error) => console.log(error));
   };
 
-  static getProfessoresFetchAsyncAwait = async (callback) => {
+  static getAlunosFetchAsyncAwait = async (callback) => {
     try {
       const response = await fetch(url+"listar");
       const json = await response.json();
@@ -42,10 +40,9 @@ class ProfessorService {
     }
   };
 
-  static getProfessorById = (id, callback) => {
-    //.get(`http://localhost:3001/professores/?id=${id}`)
+  static getAlunoById = (id, callback) => {
     axios  
-      .get(`http://localhost:3003/professores/recuperar/${id}`)
+      .get(`http://localhost:3003/aluno/recuperar/${id}`)
       .then((response) => {
         //console.log(response)
         callback(response.data);
@@ -54,20 +51,20 @@ class ProfessorService {
   };
 
   //POST SERVICES
-  static postProfessorAxiosThenCatch = (professor, callback) => {
+  static postAlunoAxiosThenCatch = (aluno, callback) => {
     axios
-      .post(url+"criar", professor)
+      .post(url+"criar", aluno)
       .then((response) => {
         callback(response);
       })
       .catch((error) => console.log(error));
   };
 
-  static postProfessorFetchThenCatch = (professor, callback) => {
+  static postAlunoFetchThenCatch = (aluno, callback) => {
     fetch(url+"criar", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(professor),
+      body: JSON.stringify(aluno),
     })
       .then((response) => {
         return response.json();
@@ -78,10 +75,9 @@ class ProfessorService {
 
   // PUT SERVICES
 
-  static updateProfessor = (id, professorEditado, callback) => {
-    //.put(`http://localhost:3001/professores/${id}`, professorEditado)
+  static updateAluno = (id, alunoEditado, callback) => {
     axios
-      .put(`http://localhost:3003/professores/atualizar/${id}`, professorEditado)
+      .put(`http://localhost:3003/aluno/atualizar/${id}`, alunoEditado)
       .then((response) => {
         //console.log(response)
         callback(response)
@@ -91,13 +87,11 @@ class ProfessorService {
 
   // DELETE SERVICES
 
-  static deleteProfessor = (id, callback) => {
-    //.delete(`http://localhost:3001/professores/${id}`)
+  static deleteAluno = (id, callback) => {
     axios
-      .delete(`http://localhost:3003/professores/apagar/${id}`)
+      .delete(`http://localhost:3003/aluno/apagar/${id}`)
       .then(response => {
-        alert("Professor apagado!")
-        //navigate("/professor/listar")
+        alert("Aluno apagado!")
         console.log(response)
         callback("ok!")
       })
@@ -105,4 +99,4 @@ class ProfessorService {
   }
 }
 
-export default ProfessorService;
+export default AlunoService;

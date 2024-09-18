@@ -1,6 +1,6 @@
 import "../../css/crud.css"
-import ProfessorService from "../../services/ProfessorService";
-import ProfessorFirebaseService from "../../services/ProfessorFirebaseService";
+import AlunoService from "../../services/AlunoService";
+import AlunoFirebaseService from "../../services/AlunoFirebaseService";
 import FirebaseContext from "../../utils/FirebaseContext";
 
 import { useEffect, useState, useContext } from "react"
@@ -10,19 +10,17 @@ import axios from "axios";
 
 const Listar = () => {
 
-  const [professores, setProfessores] = useState([])
+  const [alunos, setAlunos] = useState([])
   const navigate = useNavigate()
   const firebase = useContext(FirebaseContext)
 
   useEffect(
     () => {
-      /*ProfessorService
-      .getProfessoresFetchAsyncAwait(data => setProfessores(data))*/
-      ProfessorFirebaseService.listar(
+      AlunoFirebaseService.listar(
         firebase.getFirestoreDb(),
-        ( professores ) => {
-          //console.log(professores)
-          setProfessores(professores)
+        ( alunos ) => {
+          //console.log(alunos)
+          setAlunos(alunos)
         }
       )
     }
@@ -32,40 +30,31 @@ const Listar = () => {
 
   const handleDelete = (id) => {
     if (window.confirm(`Deseja excluir id = ${id}`)) {
-      ProfessorFirebaseService.apagar(
+      AlunoFirebaseService.apagar(
         firebase.getFirestoreDb(),
         (response) => {
-          const result = professores.filter((professor) => professor.id!==id)
-          setProfessores(result)
+          const result = alunos.filter((alunos) => alunos.id!==id)
+          setAlunos(result)
         },
         id
       )
-      /*ProfessorService.deleteProfessor(
-        id,
-      (response) =>{
-        alert(response)
-        const result = professores.filter((professor) => professor._id!==id)
-        //console.log(result)
-        setProfessores(result)
-        //navigate(0)
-      })*/
 
     }
   }
 
-  const renderizarProfessores = () => {
-    const vetorResultado = professores.map(
-        (professor) => {
+  const renderizarAlunos = () => {
+    const vetorResultado = alunos.map(
+        (aluno) => {
             return (
                 <tr>
-                    <th scope="row">{professor.id}</th>
-                    <td>{professor.nome}</td>
-                    <td>{professor.curso}</td>
-                    <td>{professor.titulacao}</td>
+                    <th scope="row">{aluno.id}</th>
+                    <td>{aluno.nome}</td>
+                    <td>{aluno.curso}</td>
+                    <td>{aluno.ira}</td>
                     <td>
                         <div className="button-content">
                             <Link 
-                              to={`/professor/editar/${professor.id}`}
+                              to={`/aluno/editar/${aluno.id}`}
                               className="btn btn-primary"
                             >
                               Editar
@@ -73,7 +62,7 @@ const Listar = () => {
                             <button 
                               type="button" 
                               className="btn btn-danger"
-                              onClick={() => handleDelete(professor.id)}
+                              onClick={() => handleDelete(aluno.id)}
                             >
                               Apagar
                             </button>
@@ -88,7 +77,7 @@ const Listar = () => {
 
   return (
     <div className="page-content">
-      <h1>Listar Professor</h1>
+      <h1>Listar Aluno</h1>
       <div className="table-content">
         <table className="table table-striped table-bordered">
           <thead className="table-dark">
@@ -96,12 +85,12 @@ const Listar = () => {
               <th scope="col">ID</th>
               <th scope="col">Nome</th>
               <th scope="col">Curso</th>
-              <th scope="col">Titulação</th>
+              <th scope="col">Ira</th>
               <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            {renderizarProfessores()}
+            {renderizarAlunos()}
           </tbody>
         </table>
       </div>

@@ -1,18 +1,9 @@
 {
-    "professores": [
+    "alunos": [
       {
         "nome": "Wladimir Tavares da Silva",
         "curso": "Design Digital",
-        "titulacao": "GRADUACAO",
-        "ai": {
-          "es": false,
-          "lc": false,
-          "mc": true
-        },
-        "universidade": {
-          "ufc": false,
-          "ifce": true
-        },
+        "ira": "7",
         "id": 1
       }
     ],
