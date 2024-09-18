@@ -1,94 +1,96 @@
-import AlunoService from "../../services/AlunoService"
-import "../../css/crud.css"
 import AlunoFirebaseService from "../../services/AlunoFirebaseService";
 import FirebaseContext from "../../utils/FirebaseContext";
 
-import { useState, useContext } from "react"
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Criar = () => {
-    
-    const [nome, setNome] = useState("")
-    const [curso, setCurso] = useState("") // Curso como um Map
-    const [ira, setIra] = useState(0) // Novo campo IRA
+    const [nome, setNome] = useState("");
+    const [curso, setCurso] = useState("");
+    const [ira, setIra] = useState(0);
 
-    const firebase = useContext(FirebaseContext)
+    const navigate = useNavigate();
 
-
-    const handleInputNome = (event) => {
-        setNome(event.target.value)
-    }
-
-    const handleInputCurso = (event) => {
-        // Adiciona o curso no Map, aqui estou assumindo que o valor do curso é uma string simples.
-        setCurso(event.target.value)
-    }
-
-    const handleInputIra = (event) => {
-        setIra(event.target.value)
-    }
+    const firebase = useContext(FirebaseContext);
 
     const handleSubmit = (event) => {
-        event.preventDefault()
-        const novoAluno = {nome, curso, ira} // Convertendo Map para objeto simples para o Firebase
+        event.preventDefault();
+        const novoAluno = { nome, curso, ira };
         AlunoFirebaseService.criar(
-            firebase.getFirestoreDb(),
-            (alunoSimples) => console.log(alunoSimples),
-            novoAluno
-        )
-    }
-    
+            firebase.getFirestoreDB(),
+            novoAluno,
+            (alunoSimples) => {
+                console.log(alunoSimples);
+            }
+        );
+        navigate("/aluno/listar");
+    };
     return (
-        <div className="page-content">
+        <div className="crudaluno-container crudaluno-form">
             <h1>Criar Aluno</h1>
             <form className="form-content" onSubmit={handleSubmit}>
-
                 <div className="mb-3">
-                    <label className="form-label" htmlFor="inputNome">Nome</label>
+                    <label className="form-label" htmlFor="inputNome">
+                        Nome
+                    </label>
                     <input
-                        className="form-control"
                         type="text"
-                        name="nome" 
+                        className="form-control"
                         id="inputNome"
-                        onChange={handleInputNome}
+                        value={nome}
+                        onChange={(event) => setNome(event.target.value)}
                     />
                 </div>
-                
                 <div className="mb-3">
-                    <label className="form-label" htmlFor="inputCurso">Curso</label>
-                    <input
+                    <label className="form-label" htmlFor="inputCurso">
+                        Curso
+                    </label>
+                    <select
                         className="form-control"
-                        type="text"
-                        name="curso"
                         id="inputCurso"
-                        onChange={handleInputCurso} 
-                    />
-                </div>
-
-                <div className="mb-3">
-                    <label className="form-label" htmlFor="inputIra">IRA</label>
-                    <input
-                        className="form-control"
-                        type="number"
-                        name="ira"
-                        id="inputIra"
-                        onChange={handleInputIra}
-                    />
-                </div>
-
-                <div className="div-button-submit">
-                    <button
-                        type="submit"
-                        className="btn btn-primary"
-                        style={{marginLeft:0}}
+                        value={curso}
+                        onChange={(event) => setCurso(event.target.value)}
                     >
-                        Submeter
-                    </button>
+                        <option value="">Selecione um curso</option>
+                        <option value="Ciência da Computação">
+                            Ciência da Computação
+                        </option>
+                        <option value="Engenharia de Software">
+                            Engenharia de Software
+                        </option>
+                        <option value="Engenharia da Computação">
+                            Engenharia da Computação
+                        </option>
+                        <option value="Sistemas de Informação">
+                            Sistemas de Informação
+                        </option>
+                        <option value="Redes de Computadores">
+                            Redes de Computadores
+                        </option>
+                        <option value="Design Digital">Design Digital</option>
+                    </select>
                 </div>
-
+                <div className="mb-3">
+                    <label className="form-label" htmlFor="inputIra">
+                        IRA
+                    </label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        id="inputIra"
+                        value={ira}
+                        onChange={(event) => setIra(event.target.value)}
+                    />
+                </div>
+                <button
+                    type="submit"
+                    className="btn btn-primary w-100 crudaluno-form-button"
+                >
+                    Criar
+                </button>
             </form>
         </div>
-        
-    )
-}
+    );
+};
 
-export { Criar }
+export default Criar;

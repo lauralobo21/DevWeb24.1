@@ -1,124 +1,113 @@
-import AlunoService from "../../services/AlunoService"
-import "../../css/crud.css"
 import AlunoFirebaseService from "../../services/AlunoFirebaseService";
 import FirebaseContext from "../../utils/FirebaseContext";
 
-import { useEffect, useState, useContext } from "react"
-import { useParams, useNavigate} from "react-router-dom"
-
-import axios from "axios"
+import { useEffect, useState, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 const Editar = () => {
+    const [nome, setNome] = useState("");
+    const [curso, setCurso] = useState("");
+    const [ira, setIra] = useState(0);
 
-    const [nome, setNome] = useState("")
-    const [curso, setCurso] = useState("")
-    const [ira, setIra] = useState("0")
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const firebase = useContext(FirebaseContext);
 
-    const {id} = useParams() // {id:1}
-    const navigate = useNavigate()
-    const firebase = useContext(FirebaseContext)
-
-    useEffect(
-        () => {
-            AlunoFirebaseService.getById(
-                firebase.getFirestoreDb(),
-                (aluno) => {
-                    const { nome, curso, ira} = aluno;
-                    setNome(nome)
-                    setCurso(curso)
-                    setIra(ira)
-                    
-                },
-                id
-            )
-        }
-        ,
-        []
-    ) 
-
-
-    const handleInputNome = (event) => {
-        setNome(event.target.value)
-    }
-
-    const handleInputCurso = (event) => {
-        setCurso(event.target.value)
-    }
-
-    const handleSelect = (event) => {
-        setIra(event.target.value)
-    }
+    useEffect(() => {
+        AlunoFirebaseService.getById(
+            firebase.getFirestoreDB(),
+            (aluno) => {
+                const { nome, curso, ira } = aluno;
+                setNome(nome);
+                setCurso(curso);
+                setIra(ira);
+            },
+            id
+        );
+    }, [firebase, id]);
 
     const handleSubmit = (event) => {
-        event.preventDefault()
-        const alunoEditado = {nome,curso,ira}
+        event.preventDefault();
+        const aluno = { nome, curso, ira };
         AlunoFirebaseService.atualizar(
-            firebase.getFirestoreDb(),
-            (aluno) => {
-                console.log(aluno)
-            },
+            firebase.getFirestoreDB(),
             id,
-            alunoEditado
-        )
-        
-    }
-    
+            aluno,
+            (response) => {
+                navigate("/aluno/listar");
+            },
+            id
+        );
+    };
+
     return (
-        <div className="page-content">
+        <div className="crudaluno-container">
             <h1>Editar Aluno</h1>
             <form className="form-content" onSubmit={handleSubmit}>
-
                 <div className="mb-3">
-                    <label className="form-label" htmlFor="inputNome">Nome</label>
+                    <label className="form-label" htmlFor="inputNome">
+                        Nome
+                    </label>
                     <input
-                        className="form-control"
                         type="text"
-                        name="nome" 
+                        className="form-control"
                         id="inputNome"
-                        onChange={handleInputNome}
                         value={nome}
+                        onChange={(event) => setNome(event.target.value)}
+                        name="nome"
                     />
                 </div>
-                
                 <div className="mb-3">
-                    <label className="form-label" htmlFor="inputCurso">Curso</label>
-                    <input
+                    <label className="form-label" htmlFor="inputCurso">
+                        Curso
+                    </label>
+                    <select
                         className="form-control"
-                        type="text"
-                        name="curso"
                         id="inputCurso"
-                        onChange={handleInputCurso}
-                        value={curso} 
-                    />
-                </div>
-
-                <div className="mb-3">
-                    <label className="form-label" htmlFor="inputIra">Ira</label>
-                    <input
-                        className="form-control"
-                        type="text"
-                        name="ira"
-                        id="inputIra"
-                        onChange={handleInputIra}
-                        value={ira} 
-                    />
-                </div>
-
-                <div className="div-button-submit">
-                    <button
-                        type="submit"
-                        className="btn btn-primary"
-                        style={{marginLeft:0}}
+                        value={curso}
+                        onChange={(event) => setCurso(event.target.value)}
                     >
-                        Atualizar
-                    </button>
+                        <option value="">Selecione um curso</option>
+                        <option value="Ciência da Computação">
+                            Ciência da Computação
+                        </option>
+                        <option value="Engenharia de Software">
+                            Engenharia de Software
+                        </option>
+                        <option value="Engenharia da Computação">
+                            Engenharia da Computação
+                        </option>
+                        <option value="Sistemas de Informação">
+                            Sistemas de Informação
+                        </option>
+                        <option value="Redes de Computadores">
+                            Redes de Computadores
+                        </option>
+                        <option value="Design Digital">Design Digital</option>
+                    </select>
                 </div>
-
+                <div className="mb-3">
+                    <label className="form-label" htmlFor="inputIra">
+                        IRA
+                    </label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        id="inputIra"
+                        value={ira}
+                        onChange={(event) => setIra(event.target.value)}
+                        name="ira"
+                    />
+                </div>
+                <button
+                    type="submit"
+                    className="btn btn-primary w-100 crudaluno-form-button"
+                >
+                    Atualizar
+                </button>
             </form>
         </div>
-        
-    )
-    
-}
+    );
+};
 
-export default Editar
+export default Editar;

@@ -1,101 +1,83 @@
-import "../../css/crud.css"
-import AlunoService from "../../services/AlunoService";
 import AlunoFirebaseService from "../../services/AlunoFirebaseService";
 import FirebaseContext from "../../utils/FirebaseContext";
 
-import { useEffect, useState, useContext } from "react"
+import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import axios from "axios";
-
 const Listar = () => {
+    const [alunos, setAlunos] = useState([]);
+    const navigate = useNavigate();
+    const firebase = useContext(FirebaseContext);
 
-  const [alunos, setAlunos] = useState([])
-  const navigate = useNavigate()
-  const firebase = useContext(FirebaseContext)
+    useEffect(() => {
+        AlunoFirebaseService.listar(firebase.getFirestoreDB(), (alunos) =>
+            setAlunos(alunos)
+        );
+    }, [firebase]);
 
-  useEffect(
-    () => {
-      AlunoFirebaseService.listar(
-        firebase.getFirestoreDb(),
-        ( alunos ) => {
-          //console.log(alunos)
-          setAlunos(alunos)
+    const handleDelete = (id) => {
+        if (window.confirm(`Deseja excluir id = ${id}`)) {
+            AlunoFirebaseService.deletar(
+                firebase.getFirestoreDB(),
+                (response) => {
+                    const result = alunos.filter((aluno) => aluno.id !== id);
+                    setAlunos(result);
+                },
+                id
+            );
+            navigate("/aluno/listar");
         }
-      )
-    }
-    ,
-    []
-  )
+    };
 
-  const handleDelete = (id) => {
-    if (window.confirm(`Deseja excluir id = ${id}`)) {
-      AlunoFirebaseService.apagar(
-        firebase.getFirestoreDb(),
-        (response) => {
-          const result = alunos.filter((alunos) => alunos.id!==id)
-          setAlunos(result)
-        },
-        id
-      )
-
-    }
-  }
-
-  const renderizarAlunos = () => {
-    const vetorResultado = alunos.map(
-        (aluno) => {
+    const renderizarAlunos = () => {
+        const vetorResultado = alunos.map((aluno) => {
             return (
                 <tr>
                     <th scope="row">{aluno.id}</th>
-                    <td>{aluno.nome}</td>
-                    <td>{aluno.curso}</td>
-                    <td>{aluno.ira}</td>
-                    <td>
+                    <td id="nome-column">{aluno.nome}</td>
+                    <td id="curso-column">{aluno.curso}</td>
+                    <td id="ira-column">{aluno.ira}</td>
+                    <td id="actions-column">
                         <div className="button-content">
-                            <Link 
-                              to={`/aluno/editar/${aluno.id}`}
-                              className="btn btn-primary"
+                            <Link
+                                to={`/aluno/editar/${aluno.id}`}
+                                className="btn btn-primary crudaluno-form-edit-button"
                             >
-                              Editar
+                                Editar
                             </Link>
-                            <button 
-                              type="button" 
-                              className="btn btn-danger"
-                              onClick={() => handleDelete(aluno.id)}
+                            <button
+                                onClick={() => handleDelete(aluno.id)}
+                                className="btn btn-danger crudaluno-form-edit-button"
                             >
-                              Apagar
+                                Excluir
                             </button>
                         </div>
                     </td>
                 </tr>
-            )
-        }
-    )
-    return vetorResultado;
-  };
+            );
+        });
+        return vetorResultado;
+    };
 
-  return (
-    <div className="page-content">
-      <h1>Listar Aluno</h1>
-      <div className="table-content">
-        <table className="table table-striped table-bordered">
-          <thead className="table-dark">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Nome</th>
-              <th scope="col">Curso</th>
-              <th scope="col">Ira</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {renderizarAlunos()}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+    return (
+        <div className="crudaluno-container">
+            <h1>Listar Alunos</h1>
+            <div className="table-content">
+                <table className="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Curso</th>
+                            <th scope="col">IRA</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>{renderizarAlunos()}</tbody>
+                </table>
+            </div>
+        </div>
+    );
 };
 
 export default Listar;
